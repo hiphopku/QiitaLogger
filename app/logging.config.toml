@@ -1,0 +1,50 @@
+version = 1
+
+[formatters]
+    [formatters.basic]
+    format = "%(asctime)s  [%(name)s][%(levelname)s]  %(message)s  (%(module)s:%(filename)s:%(funcName)s:%(lineno)d)"
+    datefmt = "%Y-%m-%d %H:%M:%S"
+
+[handlers]
+    [handlers.console]
+    class = "logging.StreamHandler"
+    level = "DEBUG"
+    formatter = "basic"
+    stream = "ext://sys.stdout"
+
+    [handlers.file]
+    class = "logging.handlers.TimedRotatingFileHandler"
+    formatter = "basic"
+    filename = "../log/application.log"
+    when = 'D'
+    interval = 1
+    backupCount = 31
+
+    [handlers.error]
+    class = "logging.handlers.TimedRotatingFileHandler"
+    level = "ERROR"
+    formatter = "basic"
+    filename = "../log/error.log"
+    when = 'D'
+    interval = 1
+    backupCount = 31
+
+[loggers]
+    [loggers.app_name]
+    level = "INFO"
+    handlers = [
+        "console",
+        "file",
+        "error",
+    ]
+    propagate = false
+
+[root]
+level = "INFO"
+handlers = [
+    "console",
+    "file",
+    "error"
+]
+
+disable_existing_loggers = false
